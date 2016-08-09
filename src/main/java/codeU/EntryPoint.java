@@ -17,13 +17,20 @@ public class EntryPoint {
     public String postMethod(@FormParam("search") String search) throws IOException {
         WikiMain w = new WikiMain();
         StringBuilder sb = new StringBuilder();
+        //String s = "";
         List<Map.Entry<String, Double>> entries = w.searcher(new String[]{search});
+
+        if(entries == null){
+            return "There are no search results for " + search;
+        }
+
         for (Map.Entry<String, Double> url : entries) {
-            sb.append(url.getKey());
+            sb.append("<a href= " + url.getKey() + ">" + url.getKey() + "</a>");
+            //s += url.getKey();
             sb.append("<br>");
         }
-        return "<h2>Results for the word " + search + "<br>" + sb + "</h2>";
-        //return "<h2>You searched " + search + "</h2>";
+        //window.open("data:text/html;charset=utf-8,"+html, "", "_blank")
+        return "<h2>Results for the word " + search + "<br>" + sb;
     }
 
     //http://localhost:8080/home/hello
