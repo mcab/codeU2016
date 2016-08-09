@@ -16,100 +16,41 @@ public class WikiMain {
 
     public List<Map.Entry<String, Double>> searcher(String[] search) throws IOException,InterruptedException,ExecutionException {
         Indexer index = new Indexer();
-        boolean searched = false;
-
-        //start prompt
-        System.out.println("WIKIPEDIA SEARCH");
-        System.out.println("Query Instructions: ");
-        System.out.println("term : returns most relevant Wikipedia pages in order for the provided term");
-        System.out.println("term1 && term2 : returns Wikipedia pages in order that contain both terms");
-        System.out.println("term1 || term2 : returns Wikipedia pages in order that contain either term");
-        System.out.println("term1 - term2 : returns Wikipedia pages in order that contain term1 but not term2");
-        System.out.println("Enter x to quit");
-        while(!searched){
-            String query = search[0];
-            List<String> words = Arrays.asList(query.split(" "));
-            String sourceUrl = "https://en.wikipedia.org/w/index.php?title=Special%3ASearch&profile=all&fulltext=Search&search=";
-            if(words.size()>2){
-                String term1 = words.get(0);
-                String term2 = words.get(2);
-                sourceUrl+=term1;
-                crawl(sourceUrl,words,query, index);
-                if(words.get(1).equals("&&")){
-                    searched = true;
-                    WikiSearch ws1 = search(term1,index);
-                    WikiSearch ws2 = search(term2,index);
-                    if(ws1 == null || ws2 == null){
-                        return null;
-                    }else {
-                        WikiSearch ws = ws1.and(ws2);
-                        return ws.sort();
-                    }
-                }else if(words.get(1).equals("||")){
-                    searched = true;
-                    WikiSearch ws1 = search(term1,index);
-                    WikiSearch ws2 = search(term2,index);
-                    if(ws1 == null || ws2 == null){
-                        return null;
-                    }else {
-                        WikiSearch ws = ws1.or(ws2);
-                        return ws.sort();
-                    }
-                }else if(words.get(1).equals("-")){
-                    searched = true;
-                    WikiSearch ws1 = search(term1,index);
-                    WikiSearch ws2 = search(term2,index);
-                    if(ws1 == null || ws2 == null){
-                        return null;
-                    }else {
-                        WikiSearch ws = ws1.minus(ws2);
-                        return ws.sort();
-                    }
-
-                }else{
-                    System.out.println("Try Again!");
-                    continue;
+        System.out.println("WIKIPEDIA SEARCH, searching for: " + search[0]);
+        String query = search[0];
+        List<String> words = Arrays.asList(query.split(" "));
+        String sourceUrl = "https://en.wikipedia.org/w/index.php?title=Special:Search&limit=30&profile=advanced&profile=advanced&fulltext=Search&search=";
+        if (words.size() > 2) {
+            String term1 = words.get(0);
+            String term2 = words.get(2);
+            sourceUrl += term1;
+            crawl(sourceUrl, words, query, index);
+            WikiSearch ws1 = search(term1, index);
+            WikiSearch ws2 = search(term2, index);
+            if (ws1 == null || ws2 == null) {
+                return null;
+            } else {
+                if (words.get(1).equals("&&")) {
+                    WikiSearch ws = ws1.and(ws2);
+                    return ws.sort();
+                } else if (words.get(1).equals("||")) {
+                    WikiSearch ws = ws1.or(ws2);
+                    return ws.sort();
+                } else if (words.get(1).equals("-")) {
+                    WikiSearch ws = ws1.minus(ws2);
+                    return ws.sort();
                 }
-
-            }else if(words.size() == 1){
-                sourceUrl+=words.get(0);
-                if(words.get(0).equals("x")){
-                    break;
-                }
-                //noinspection Since15
-                if(words.get(0).isEmpty()){
-                    System.out.println("Try Again!");
-                    continue;
-                }
-                searched = true;
+            }
+        } else if (words.size() == 1) {
+                sourceUrl += words.get(0);
                 crawl(sourceUrl, words, query, index);
-                WikiSearch ws = search(words.get(0),index);
-                if(ws == null){
+                WikiSearch ws = search(words.get(0), index);
+                if (ws == null) {
                     return null;
                 }
-                System.out.println("-------------------RESULTS-------------------");
                 return ws.sort();
-            }else{
-                System.out.println("Try Again!");
-                continue;
-            }
-
         }
-
         return null;
-
-    }
-
-
-    private static String query(){
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Enter a query or type x to quit: ");
-        if(sc.hasNextLine()){
-            String line = sc.nextLine();
-            return line;
-        }else{
-            return null;
-        }
     }
 
     private static WikiSearch search(String term, Indexer index){
@@ -130,6 +71,5 @@ public class WikiMain {
         WikiCrawler wc = new WikiCrawler(url, query, terms, index);
         wc.setQueue();
         wc.crawl();
-
     }
 }
