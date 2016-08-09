@@ -17,13 +17,22 @@ public class EntryPoint {
         StringBuilder sb = new StringBuilder();
         List<Map.Entry<String, Double>> entries = w.searcher(new String[]{search});
 
-        if(entries == null){
+        if(entries == null) {
             return "There are no search results for " + search;
         }
 
+        int urlNumber = 1;
         for (Map.Entry<String, Double> url : entries) {
-            sb.append("<a href= " + url.getKey() + ">" + url.getKey() + "</a><br>");
+            sb.append(urlNumber + ") <a href=" + url.getKey() + ">" + cleanURL(url.getKey().substring(30)) + "</a><br>\n");
+            urlNumber += 1;
         }
         return "<h2>Results for the word " + search + "<br>" + sb;
+    }
+    private String cleanURL(String url){
+        String clean = url;
+        clean = clean.replace("_", " ");
+        clean = clean.replace("%22", "\"");
+        clean = clean.replace("%27", "\'");
+        return clean;
     }
 }
