@@ -1,0 +1,6 @@
+# Ignore .idea folder
+.idea/
+
+# Ignore compiled files
+*.class
+target/
