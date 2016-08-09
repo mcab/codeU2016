@@ -23,7 +23,7 @@ public class WikiMain {
         while(!searched){
             String query = search[0];
             List<String> words = Arrays.asList(query.split(" "));
-            String sourceUrl = "https://en.wikipedia.org/w/index.php?title=Special:Search&profile=advanced&profile=advanced&fulltext=Search&search=";
+            String sourceUrl = "https://en.wikipedia.org/w/index.php?title=Special:Search&limit=30&profile=advanced&profile=advanced&fulltext=Search&search=";
             if (words.size() > 2){
                 String term1 = words.get(0);
                 String term2 = words.get(2);
