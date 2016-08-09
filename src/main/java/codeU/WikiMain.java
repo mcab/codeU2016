@@ -24,11 +24,11 @@ public class WikiMain {
             String query = search[0];
             List<String> words = Arrays.asList(query.split(" "));
             String sourceUrl = "https://en.wikipedia.org/w/index.php?title=Special:Search&profile=advanced&profile=advanced&fulltext=Search&search=";
-            if(words.size()>2){
+            if (words.size() > 2){
                 String term1 = words.get(0);
                 String term2 = words.get(2);
-                sourceUrl+=term1;
-                crawl(sourceUrl,words,query, index);
+                sourceUrl += term1;
+                crawl(sourceUrl, words, query, index);
                 if(words.get(1).equals("&&")){
                     searched = true;
                     WikiSearch ws1 = search(term1,index);
@@ -67,7 +67,7 @@ public class WikiMain {
                 sourceUrl+=words.get(0);
                 searched = true;
                 crawl(sourceUrl, words, query, index);
-                WikiSearch ws = search(words.get(0),index);
+                WikiSearch ws = search(words.get(0), index);
                 if(ws == null){
                     return null;
                 }
@@ -112,6 +112,5 @@ public class WikiMain {
         WikiCrawler wc = new WikiCrawler(url, query, terms, index);
         wc.setQueue();
         wc.crawl();
-
     }
 }
