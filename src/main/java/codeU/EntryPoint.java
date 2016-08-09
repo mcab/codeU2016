@@ -8,8 +8,6 @@ import java.util.Map;
 
 @Path("/entry-point")
 public class EntryPoint {
-
-
     @POST
     @Path("post")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
@@ -32,17 +30,4 @@ public class EntryPoint {
         //window.open("data:text/html;charset=utf-8,"+html, "", "_blank")
         return "<h2>Results for the word " + search + "<br>" + sb;
     }
-
-    //http://localhost:8080/home/hello
-    @GET
-    @Path("hello")
-    @Produces(MediaType.TEXT_PLAIN)
-    public String hello() {
-
-        return "Hello, World!";
-    }
-
 }
-
-
-
