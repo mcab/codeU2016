@@ -51,17 +51,6 @@ public class WikiMain {
         }
         return null;
     }
-    
-    private static String query(){
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Enter a query or type x to quit: ");
-        if(sc.hasNextLine()){
-            String line = sc.nextLine();
-            return line;
-        }else{
-            return null;
-        }
-    }
 
     private static WikiSearch search(String term, Indexer index){
         Map<String, Integer> m = index.getCounts(term);
