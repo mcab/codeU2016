@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WikiSearch</title>
+    <!--bootstrap-->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+    <style>
+        .img-responsive {
+	        width:100%;
+        }
+
+        .jumbotron {
+	        text-align: center;
+        }
+
+        .section-heading-spacer {
+	        border-top: 4px solid #0099cc;
+	        opacity: 0.5;
+        }
+
+        .searchBar {
+           margin-left:auto;
+           margin-right:auto;
+           width:100px;
+        }
+
+    </style>
+
+    <script>
+        $("button").click(function(){
+            $.get(action="http://localhost:8080/entry-point/get" method="get", function(data, status){
+                alert("Data: " + data + "\nStatus: " + status);
+            });
+        });
+
+    </script>
+</head>
+
+<body>
+
+
+
+<div class="jumbotron">
+    <h1>WikiSearch</h1>
+</div>
+
+<section id="instructions">
+
+    <div id="search" class="content-section-a">
+        <div class="container">
+            <div class="row">
+                <h5 class="category-heading">Instructions:</h5>
+                <hr class="section-heading-spacer">
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-5 col-sm-6">
+                    <div class="lead"><p><br></p>
+                        <div class="container text-left">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <!--<img src="term.png" class="img-responsive square" alt="and">-->
+                                    <p class="small well"><b>term:</b><br>returns most relevant Wikipedia pages in order for the provided term</a></p>
+                                </div>
+                                <div class="col-sm-3">
+                                    <!--<img src="and.png" class="img-responsive square" alt="and">-->
+                                    <p class="small well"><b>term1 && term2:</b><br>returns Wikipedia pages in order that contain both term1 AND term2</a></p>
+                                </div>
+
+                                <div class="col-sm-3">
+                                    <!--<img src="or.png" class="img-responsive square" alt="or">-->
+                                    <p class="small well"><b>term1 || term2:</b><br>returns Wikipedia pages in order that contain either term1 OR term2</p>
+                                </div>
+                                <div class="col-sm-3">
+                                    <!--<img src="minus.png" class="img-responsive square" alt="minus">-->
+                                    <p class="small well"><b>term1 - term2:</b><br>returns Wikipedia pages in order that contain term1 but not term2</p>
+                                </div>
+                                <!--<div class="col-sm-2">
+                                  <img src="x.png" class="img-responsive square" alt="and">
+                                  <p class="small well">Type <b>x</b> to quit</a></p>
+                                </div>-->
+                            </div>
+                        </div><br>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="searchBar">
+    <form action="http://localhost:8080/entry-point/post" method="post">
+        <p>Search: <input type="text" name="search"></p>
+    </form>
+</div>
+
+
+</body>
+</html>
