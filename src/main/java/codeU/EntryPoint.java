@@ -23,7 +23,7 @@ public class EntryPoint {
 
         int urlNumber = 1;
         for (Map.Entry<String, Double> url : entries) {
-            sb.append(urlNumber + ") <a href=" + url.getKey() + ">" + cleanURL(url.getKey().substring(30)) + "</a><br>\n");
+            sb.append(urlNumber + ") <a href=" + url.getKey() + ">" + cleanURL(url.getKey().substring(30)) + "</a>: " + url.getValue() + "<br>\n");
             urlNumber += 1;
         }
         return "<h2>Results for the word " + search + "<br>" + sb;
@@ -33,6 +33,7 @@ public class EntryPoint {
         clean = clean.replace("_", " ");
         clean = clean.replace("%22", "\"");
         clean = clean.replace("%27", "\'");
+        clean = clean.replace("%C2%A1", "¡");
         return clean;
     }
 }
