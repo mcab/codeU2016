@@ -19,12 +19,7 @@ public class WikiMain {
 
         //start prompt
         System.out.println("WIKIPEDIA SEARCH");
-        System.out.println("Query Instructions: ");
-        System.out.println("term : returns most relevant Wikipedia pages in order for the provided term");
-        System.out.println("term1 && term2 : returns Wikipedia pages in order that contain both terms");
-        System.out.println("term1 || term2 : returns Wikipedia pages in order that contain either term");
-        System.out.println("term1 - term2 : returns Wikipedia pages in order that contain term1 but not term2");
-        System.out.println("Enter x to quit");
+        System.out.println("Searching for: " + search[0]);
         while(!searched){
             String query = search[0];
             List<String> words = Arrays.asList(query.split(" "));
@@ -64,22 +59,12 @@ public class WikiMain {
                         WikiSearch ws = ws1.minus(ws2);
                         return ws.sort();
                     }
-
                 }else{
                     System.out.println("Try Again!");
                     continue;
                 }
-
             }else if(words.size() == 1){
                 sourceUrl+=words.get(0);
-                if(words.get(0).equals("x")){
-                    break;
-                }
-                //noinspection Since15
-                if(words.get(0).isEmpty()){
-                    System.out.println("Try Again!");
-                    continue;
-                }
                 searched = true;
                 crawl(sourceUrl, words, query, index);
                 WikiSearch ws = search(words.get(0),index);
@@ -94,9 +79,7 @@ public class WikiMain {
             }
 
         }
-
         return null;
-
     }
 
 
