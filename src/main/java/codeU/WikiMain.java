@@ -10,10 +10,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.concurrent.ExecutionException;
 
 public class WikiMain {
 
-    public List<Map.Entry<String, Double>> searcher(String[] search) throws IOException {
+    public List<Map.Entry<String, Double>> searcher(String[] search) throws IOException,InterruptedException,ExecutionException {
         Indexer index = new Indexer();
         boolean searched = false;
 
@@ -125,7 +126,7 @@ public class WikiMain {
         return new WikiSearch(map,index);
     }
 
-    private static void crawl(String url, List<String> terms,String query, Indexer index)throws IOException{
+    private static void crawl(String url, List<String> terms,String query, Indexer index)throws IOException,InterruptedException,ExecutionException{
         WikiCrawler wc = new WikiCrawler(url, query, terms, index);
         wc.setQueue();
         wc.crawl();

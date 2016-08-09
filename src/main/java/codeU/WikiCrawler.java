@@ -2,9 +2,12 @@ package codeU;
 
 import java.io.IOException;
 import java.lang.String;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -49,10 +52,10 @@ public class WikiCrawler {
 	public void setQueue(){
 		Elements paras;
 		try {
-			paras = wf.fetchWikipedia(source);
+			paras = wf.fetchWiki(source);
 			
 			queueInternalLinks(paras);
-		} catch (IOException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -69,23 +72,26 @@ public class WikiCrawler {
 	
 	/**
 	 * Gets a URL from the queue and indexes it.
-	 * @param b 
+	 * @param
 	 * 
 	 * @return Number of pages indexed.
 	 * @throws IOException
 	 */
-	public void crawl() throws IOException{
+	public void crawl() throws IOException,InterruptedException,ExecutionException{
         
 		if(queue.isEmpty())
 			return;
-		String url=queue.poll();
-		while(!queue.isEmpty()){
-			if(!index.isIndexed(query,url)){
-				index.indexPage(url,terms,query,wf.fetchWikipedia(url));
+		List<Future<HashMap<String,Elements>>> paras = wf.fetchWikipedia(queue);
+		for(Future<HashMap<String,Elements>> ele : paras){
+			HashMap<String,Elements> map = ele.get();
+			for(String url: map.keySet()){
+				if(!index.isIndexed(url,query)){
+					index.indexPage(url,terms,query,map.get(url));
+				}
 			}
-			url = queue.poll();
+
 		}
-		
+
 	}
 	
 	/**

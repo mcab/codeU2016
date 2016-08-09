@@ -5,6 +5,7 @@ import javax.ws.rs.core.MediaType;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 @Path("/entry-point")
 public class EntryPoint {
@@ -14,7 +15,7 @@ public class EntryPoint {
     @Path("post")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.TEXT_HTML)
-    public String postMethod(@FormParam("search") String search) throws IOException {
+    public String postMethod(@FormParam("search") String search) throws IOException,InterruptedException,ExecutionException {
         WikiMain w = new WikiMain();
         StringBuilder sb = new StringBuilder();
         //String s = "";
@@ -30,7 +31,7 @@ public class EntryPoint {
             sb.append("<br>");
         }
         //window.open("data:text/html;charset=utf-8,"+html, "", "_blank")
-        return "<h2>Results for the word " + search + "<br>" + sb;
+        return "<h3>Results for the query " + search + "<br>" + sb;
     }
 
     //http://localhost:8080/home/hello
