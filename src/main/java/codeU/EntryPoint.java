@@ -15,7 +15,6 @@ public class EntryPoint {
     public String postMethod(@FormParam("search") String search) throws IOException {
         WikiMain w = new WikiMain();
         StringBuilder sb = new StringBuilder();
-        //String s = "";
         List<Map.Entry<String, Double>> entries = w.searcher(new String[]{search});
 
         if(entries == null){
@@ -23,11 +22,8 @@ public class EntryPoint {
         }
 
         for (Map.Entry<String, Double> url : entries) {
-            sb.append("<a href= " + url.getKey() + ">" + url.getKey() + "</a>");
-            //s += url.getKey();
-            sb.append("<br>");
+            sb.append("<a href= " + url.getKey() + ">" + url.getKey() + "</a><br>");
         }
-        //window.open("data:text/html;charset=utf-8,"+html, "", "_blank")
         return "<h2>Results for the word " + search + "<br>" + sb;
     }
 }
