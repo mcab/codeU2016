@@ -31,8 +31,7 @@
 
         .searchBar {
            margin:auto;
-           width:150px;
-           padding-bottom: 60px;
+           width:250px;
         }
     </style>
 
@@ -40,23 +39,19 @@
 
 <body>
 
-
-
 <div class="jumbotron">
     <img src="wikilogo.png" alt="Wikipedia Logo">
     <h1>WikiSearch</h1>
 </div>
 
 <section id="instructions">
-
     <div id="search" class="content-section-a">
         <div class="container">
-            <div class="row">
-                <h5 class="category-heading">Instructions:</h5>
-                <hr class="section-heading-spacer">
-                <div class="clearfix"></div>
+            <div class="searchBar">
+                <form action="http://localhost:8080/entry-point/post" method="post" target="_blank">
+                    <input type="text" name="search" class="input-lg">
+                </form>
             </div>
-
             <div class="row">
                 <div class="col-lg-5 col-sm-6">
                     <div class="lead"><p><br></p>
@@ -92,13 +87,5 @@
         </div>
     </div>
 </section>
-
-<div class="searchBar">
-    <form action="http://localhost:8080/entry-point/post" method="post" target="_blank">
-        <p>Search: <input type="text" name="search"></p>
-    </form>
-</div>
-
-
 </body>
 </html>
